@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:background="#FF9800"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="bottom">
+
+    <TextView
+        android:id="@+id/tvHeaderBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CampusDash"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvHeaderRole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Administrator"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvHeaderSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Manage your campus food platform"
+        android:textColor="#FFF3E0"
+        android:textSize="12sp" />
+
+</LinearLayout>

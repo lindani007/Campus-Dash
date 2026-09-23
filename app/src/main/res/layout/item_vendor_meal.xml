@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="#1E1E1E"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvMealName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Name"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvMealDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="R0.00 | Category"
+            android:textColor="#A0A0A0"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEditMeal"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginEnd="6dp"
+        android:backgroundTint="#2196F3"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Edit"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btnDeleteMeal"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:backgroundTint="#D32F2F"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Delete"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+
+</LinearLayout>
