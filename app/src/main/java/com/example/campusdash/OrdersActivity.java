@@ -16,7 +16,7 @@ public class OrdersActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private RecyclerView recyclerViewOrders;
     private List<Order> orderList;
-    private TextView btnBack; // Declared at class level
+    private TextView btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +25,9 @@ public class OrdersActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        // Bind and set click listener inside onCreate
         btnBack = findViewById(R.id.btnBack);
         if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish()); // Closes current activity and goes back
+            btnBack.setOnClickListener(v -> finish());
         }
 
         recyclerViewOrders = findViewById(R.id.recyclerViewOrders);
@@ -43,25 +42,23 @@ public class OrdersActivity extends AppCompatActivity {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                String orderId = cursor.getString(cursor.getColumnIndexOrThrow("orderid"));
-                int mealId = cursor.getInt(cursor.getColumnIndexOrThrow("mealid"));
-                int quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"));
-                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
-                String location = cursor.getString(cursor.getColumnIndexOrThrow("location"));
-                String userEmail = cursor.getString(cursor.getColumnIndexOrThrow("userEmail"));
-                String status = cursor.getString(cursor.getColumnIndexOrThrow("orderstatus"));
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String orderNumber = cursor.getString(cursor.getColumnIndexOrThrow("order_number"));
+                String studentName = cursor.getString(cursor.getColumnIndexOrThrow("student_name"));
+                String vendorName = cursor.getString(cursor.getColumnIndexOrThrow("vendor_name"));
+                double amount = cursor.getDouble(cursor.getColumnIndexOrThrow("amount"));
+                String status = cursor.getString(cursor.getColumnIndexOrThrow("status"));
 
-                orderList.add(new Order(orderId, mealId, quantity, date, location, userEmail, status));
+                orderList.add(new Order(id, orderNumber, studentName, vendorName, amount, status));
             } while (cursor.moveToNext());
             cursor.close();
         }
 
         OrdersAdapter adapter = new OrdersAdapter(orderList, order -> {
             Intent intent = new Intent(OrdersActivity.this, OrderDetailsActivity.class);
-            intent.putExtra("ORDER_ID", order.getOrderid());
-            intent.putExtra("MEAL_ID", order.getMealid());
-            intent.putExtra("QTY", order.getQuantity());
-            intent.putExtra("LOCATION", order.getLocation());
+            intent.putExtra("ORDER_ID", order.getId());
+            intent.putExtra("ORDER_NUM", order.getOrderNumber());
+            intent.putExtra("TOTAL", order.getAmount());
             startActivity(intent);
         });
 

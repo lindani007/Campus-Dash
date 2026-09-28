@@ -12,7 +12,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "CampusDash.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     // Table Names
     public static final String TABLE_USERS = "users";
@@ -38,7 +38,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // 1. Create Users Table
         String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + " ("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_EMAIL + " TEXT UNIQUE, "
@@ -47,7 +46,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ROLE + " TEXT, "
                 + COLUMN_PHONE + " TEXT" + ")";
 
-        // 2. Create Stores Table
         String CREATE_STORES_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_STORES + " ("
                 + "storeid INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "storename TEXT, "
@@ -56,7 +54,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "storeimage TEXT, "
                 + "rating TEXT" + ")";
 
-        // 3. Create Meals Table
         String CREATE_MEALS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_MEALS + " ("
                 + "mealid INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "mealname TEXT, "
@@ -65,7 +62,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "storeid INTEGER, "
                 + "mealcatergory TEXT" + ")";
 
-        // 4. Create Orders Table
         String CREATE_ORDERS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_ORDERS + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "order_number TEXT, "
@@ -74,7 +70,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "amount REAL, "
                 + "status TEXT" + ")";
 
-        // 5. Create Payments Table
         String CREATE_PAYMENTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_PAYMENTS + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "payment_number TEXT, "
@@ -84,13 +79,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "method TEXT, "
                 + "status TEXT" + ")";
 
-        // 6. Create Delivery Guys Table
         String CREATE_DELIVERY_GUYS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DELIVERY_GUYS + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "deliveryguyname TEXT, "
                 + "email TEXT" + ")";
 
-        // 7. Create Cart Table
         String CREATE_CART_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_CART + " ("
                 + "cartid INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "mealid INTEGER, "
@@ -99,7 +92,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "meaimage TEXT, "
                 + "quantity INTEGER" + ")";
 
-        // 8. Create Order Items Table
         String CREATE_ORDER_ITEMS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_ORDER_ITEMS + " ("
                 + "item_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "order_id INTEGER, "
@@ -107,7 +99,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "meal_price REAL, "
                 + "quantity INTEGER" + ")";
 
-        // Execute all table creations
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_STORES_TABLE);
         db.execSQL(CREATE_MEALS_TABLE);
@@ -117,7 +108,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_CART_TABLE);
         db.execSQL(CREATE_ORDER_ITEMS_TABLE);
 
-        // Seed initial data safely
         seedData(db);
     }
 
@@ -134,13 +124,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // --- SEED INITIAL DUMMY DATA SAFELY ---
     private void seedData(SQLiteDatabase db) {
-        // 1. Seed Stores
         db.execSQL("INSERT INTO " + TABLE_STORES + " (storename, vendorname, vendorid, storeimage, rating) VALUES ('Campus Grill', 'John Vendor', 1, 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5', '4.8')");
         db.execSQL("INSERT INTO " + TABLE_STORES + " (storename, vendorname, vendorid, storeimage, rating) VALUES ('Fast Eats', 'Mary Vendor', 2, 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4', '4.5')");
 
-        // 2. Seed Meals with Images (Linked to storeid 1 and 2)
         db.execSQL("INSERT INTO " + TABLE_MEALS + " (mealname, meaimage, mealprice, storeid, mealcatergory) VALUES "
                 + "('Cheeseburger & Fries', 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd', 65.00, 1, 'Fast Food'), "
                 + "('Pepperoni Pizza Slice', 'https://images.unsplash.com/photo-1513104890138-7c749659a591', 35.00, 1, 'Pizza'), "
@@ -148,17 +135,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "('Grilled Chicken Salad', 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c', 55.00, 2, 'Healthy'), "
                 + "('Steamed Bread & Stew', 'https://images.unsplash.com/photo-1547592180-85f173990554', 45.00, 2, 'Traditional')");
 
-        // 3. Seed Dummy Orders
         db.execSQL("INSERT INTO " + TABLE_ORDERS + " (order_number, student_name, vendor_name, amount, status) VALUES "
                 + "('ORD-1001', 'Thabo Mokoena', 'Campus Grill', 100.00, 'Completed'), "
                 + "('ORD-1002', 'Lindiwe Ndlovu', 'Fast Eats', 55.00, 'Pending'), "
                 + "('ORD-1003', 'Sipho Dlamini', 'Campus Grill', 65.00, 'In Progress')");
 
-        // 4. Seed Dummy Payments
         db.execSQL("INSERT INTO " + TABLE_PAYMENTS + " (payment_number, student_name, vendor_name, amount, method, status) VALUES "
                 + "('PAY-5001', 'Thabo Mokoena', 'Campus Grill', 100.00, 'Card', 'Successful'), "
                 + "('PAY-5002', 'Lindiwe Ndlovu', 'Fast Eats', 55.00, 'EFT', 'Pending'), "
                 + "('PAY-5003', 'Sipho Dlamini', 'Campus Grill', 65.00, 'Cash', 'Successful')");
+    }
+
+    // --- SEED DUMMY ORDERS METHOD ---
+
+    public void seedDummyOrdersIfEmpty() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_ORDERS, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int count = cursor.getInt(0);
+            cursor.close();
+            if (count == 0) {
+                db.execSQL("INSERT INTO " + TABLE_ORDERS + " (order_number, student_name, vendor_name, amount, status) VALUES "
+                        + "('ORD-1001', 'Thabo Mokoena', 'Campus Grill', 100.00, 'Completed'), "
+                        + "('ORD-1002', 'Lindiwe Ndlovu', 'Fast Eats', 55.00, 'Pending'), "
+                        + "('ORD-1003', 'Sipho Dlamini', 'Campus Grill', 65.00, 'In Progress')");
+            }
+        }
     }
 
     // --- USER MANAGEMENT ---
@@ -321,7 +323,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // --- ORDERS METHODS ---
+    // --- ORDERS & ORDER ITEMS METHODS ---
 
     public Cursor getAllOrders() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -347,12 +349,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.update(TABLE_ORDERS, values, "id=?", new String[]{String.valueOf(orderId)}) > 0;
     }
 
+    public boolean updateOrderStatus(String orderId, String newStatus) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("status", newStatus);
+        return db.update(TABLE_ORDERS, values, "id=?", new String[]{orderId}) > 0;
+    }
+
+    public Cursor getOrderItems(int orderId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_ORDER_ITEMS, null, "order_id=?", new String[]{String.valueOf(orderId)}, null, null, null);
+    }
+
+    public boolean insertOrderItem(int orderId, String mealName, double mealPrice, int quantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("order_id", orderId);
+        values.put("meal_name", mealName);
+        values.put("meal_price", mealPrice);
+        values.put("quantity", quantity);
+        long result = db.insert(TABLE_ORDER_ITEMS, null, values);
+        return result != -1;
+    }
+
     // --- PAYMENTS METHODS ---
 
-    public Cursor getAllPayments() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_PAYMENTS, null, null, null, null, null, "id DESC");
-    }
+
 
     public boolean insertPayment(String paymentNumber, String studentName, String vendorName, double amount, String method, String status) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -367,7 +389,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    // --- MEALS METHODS (Shared by Vendor & Student) ---
+    // --- MEALS METHODS ---
 
     public boolean insertMeal(Meal meal) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -533,5 +555,80 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteDeliveryGuy(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_DELIVERY_GUYS, "id=?", new String[]{String.valueOf(id)}) > 0;
+    }
+
+// --- PAYMENTS SEED & FETCH METHODS ---
+
+    /**
+     * Seeds initial mock/dummy payment records into the database if the payments table is empty.
+     */
+    public void seedDummyPaymentsIfEmpty() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Check if table already contains data
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_PAYMENTS, null);
+        int count = 0;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+
+        // Seed dummy records using your schema's column structure
+        if (count == 0) {
+            db.beginTransaction();
+            try {
+                insertDummyPayment(db, "PAY-5001", "Thabo Mokoena", "Campus Grill", 100.00, "Card", "Successful");
+                insertDummyPayment(db, "PAY-5002", "Lindiwe Ndlovu", "Fast Eats", 55.00, "EFT", "Pending");
+                insertDummyPayment(db, "PAY-5003", "Sipho Dlamini", "Campus Grill", 65.00, "Cash", "Successful");
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        }
+    }
+
+    private void insertDummyPayment(SQLiteDatabase db, String paymentNumber, String studentName, String vendorName, double amount, String method, String status) {
+        ContentValues values = new ContentValues();
+        values.put("payment_number", paymentNumber);
+        values.put("student_name", studentName);
+        values.put("vendor_name", vendorName);
+        values.put("amount", amount);
+        values.put("method", method);
+        values.put("status", status);
+        db.insert(TABLE_PAYMENTS, null, values);
+    }
+
+    /**
+     * Retrieves all payment records from the database as a List<Payment>.
+     */
+    public List<Payment> getAllPaymentsList() {
+        List<Payment> paymentList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + TABLE_PAYMENTS + " ORDER BY id DESC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String paymentNumber = cursor.getString(cursor.getColumnIndexOrThrow("payment_number"));
+                String studentName = cursor.getString(cursor.getColumnIndexOrThrow("student_name"));
+                String vendorName = cursor.getString(cursor.getColumnIndexOrThrow("vendor_name"));
+                double amount = cursor.getDouble(cursor.getColumnIndexOrThrow("amount"));
+                String method = cursor.getString(cursor.getColumnIndexOrThrow("method"));
+                String status = cursor.getString(cursor.getColumnIndexOrThrow("status"));
+
+                // Ensure your Payment model constructor matches this parameter order:
+                // Payment(id, paymentNumber, studentName, vendorName, amount, method, status)
+                Payment payment = new Payment(id, paymentNumber, studentName, vendorName, amount, method, status);
+                paymentList.add(payment);
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return paymentList;
     }
 }

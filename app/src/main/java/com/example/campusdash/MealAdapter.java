@@ -15,9 +15,15 @@ import java.util.List;
 public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder> {
 
     private List<Meal> mealList;
+    private OnMealClickListener listener;
 
-    public MealAdapter(List<Meal> mealList) {
+    public interface OnMealClickListener {
+        void onMealClick(Meal meal);
+    }
+
+    public MealAdapter(List<Meal> mealList, OnMealClickListener listener) {
         this.mealList = mealList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -31,7 +37,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
     public void onBindViewHolder(@NonNull MealViewHolder holder, int position) {
         Meal meal = mealList.get(position);
         holder.tvName.setText(meal.getMealname());
-        holder.tvDetails.setText("R" + meal.getMealprice() + " • " + meal.getMealcatergory());
+        holder.tvDetails.setText("R" + String.format("%.2f", meal.getMealprice()) + " • " + meal.getMealcatergory());
 
         // Glide handles network URLs and drawables smoothly
         Glide.with(holder.itemView.getContext())
@@ -39,6 +45,12 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
                 .placeholder(R.drawable.bg_card)
                 .error(R.drawable.bg_card)
                 .into(holder.imgMeal);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onMealClick(meal);
+            }
+        });
     }
 
     @Override

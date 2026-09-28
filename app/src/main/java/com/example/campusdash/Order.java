@@ -1,44 +1,39 @@
 package com.example.campusdash;
 
 public class Order {
-    private String orderid;
-    private int mealid;
-    private int quantity;
-    private String date; // Standard string format for SQLite ISO dates
-    private String location;
-    private String userEmail;
-    private String orderstatus;
+    private int id;
+    private String orderNumber;
+    private String studentName;
+    private String vendorName;
+    private double amount;
+    private String status;
 
     public Order() {}
 
-    public Order(String orderid, int mealid, int quantity, String date, String location, String userEmail, String orderstatus) {
-        this.orderid = orderid;
-        this.mealid = mealid;
-        this.quantity = quantity;
-        this.date = date;
-        this.location = location;
-        this.userEmail = userEmail;
-        this.orderstatus = orderstatus;
+    public Order(int id, String orderNumber, String studentName, String vendorName, double amount, String status) {
+        this.id = id;
+        this.orderNumber = orderNumber;
+        this.studentName = studentName;
+        this.vendorName = vendorName;
+        this.amount = amount;
+        this.status = status;
     }
 
-    public String getOrderid() { return orderid; }
-    public void setOrderid(String orderid) { this.orderid = orderid; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getMealid() { return mealid; }
-    public void setMealid(int mealid) { this.mealid = mealid; }
+    public String getOrderNumber() { return orderNumber; }
+    public void setOrderNumber(String orderNumber) { this.orderNumber = orderNumber; }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public String getStudentName() { return studentName; }
+    public void setStudentName(String studentName) { this.studentName = studentName; }
 
-    public String getDate() { return date; }
-    public void setDate(String date) { this.date = date; }
+    public String getVendorName() { return vendorName; }
+    public void setVendorName(String vendorName) { this.vendorName = vendorName; }
 
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
+    public double getAmount() { return amount; }
+    public void setAmount(double amount) { this.amount = amount; }
 
-    public String getUserEmail() { return userEmail; }
-    public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
-
-    public String getOrderstatus() { return orderstatus; }
-    public void setOrderstatus(String orderstatus) { this.orderstatus = orderstatus; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

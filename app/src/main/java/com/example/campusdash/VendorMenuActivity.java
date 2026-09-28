@@ -17,6 +17,7 @@ public class VendorMenuActivity extends AppCompatActivity {
     private List<Meal> fullMealList;
     private List<Meal> displayedMealList;
     private int currentStoreId;
+    private MealAdapter mealAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +52,11 @@ public class VendorMenuActivity extends AppCompatActivity {
 
         displayedMealList = new ArrayList<>(fullMealList);
 
+        // Fix: Set the Adapter to show the items and handle clicking to add to cart
+        mealAdapter = new MealAdapter(displayedMealList, meal -> {
+            dbHelper.addToCart(meal);
+            Toast.makeText(VendorMenuActivity.this, meal.getMealname() + " added to cart!", Toast.LENGTH_SHORT).show();
+        });
+        recyclerViewVendorMeals.setAdapter(mealAdapter);
     }
 }

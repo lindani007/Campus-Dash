@@ -35,16 +35,30 @@ public class DeliveryGuySimActivity extends AppCompatActivity {
         }
 
         btnAcceptOrder.setOnClickListener(v -> {
-            dbHelper.updateOrderStatus(orderId, "Out for Delivery");
-            Toast.makeText(this, "Order accepted! En route to customer.", Toast.LENGTH_SHORT).show();
-            btnAcceptOrder.setEnabled(false);
-            btnCompleteDelivery.setEnabled(true);
+            if (orderId != null) {
+                try {
+                    int numericOrderId = Integer.parseInt(orderId);
+                    dbHelper.updateOrderStatus(numericOrderId, "Out for Delivery");
+                    Toast.makeText(this, "Order accepted! En route to customer.", Toast.LENGTH_SHORT).show();
+                    btnAcceptOrder.setEnabled(false);
+                    btnCompleteDelivery.setEnabled(true);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this, "Invalid Order ID format", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
 
         btnCompleteDelivery.setOnClickListener(v -> {
-            dbHelper.updateOrderStatus(orderId, "Delivered");
-            Toast.makeText(this, "Order delivered successfully!", Toast.LENGTH_LONG).show();
-            finish();
+            if (orderId != null) {
+                try {
+                    int numericOrderId = Integer.parseInt(orderId);
+                    dbHelper.updateOrderStatus(numericOrderId, "Delivered");
+                    Toast.makeText(this, "Order delivered successfully!", Toast.LENGTH_LONG).show();
+                    finish();
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this, "Invalid Order ID format", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 }

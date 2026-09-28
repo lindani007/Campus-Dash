@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import java.util.Locale;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewHolder> {
 
@@ -32,10 +33,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.OrderViewH
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         Order order = orderList.get(position);
-        holder.tvOrderNumber.setText("#" + order.getOrderid());
-        holder.tvOrderVendor.setText("Deliver to: " + order.getLocation());
-        holder.tvOrderStatus.setText("Status: " + order.getOrderstatus());
-        holder.tvOrderAmount.setText("Qty: " + order.getQuantity());
+        holder.tvOrderNumber.setText("Order #" + order.getOrderNumber());
+        holder.tvOrderVendor.setText("Vendor: " + order.getVendorName());
+        holder.tvOrderStatus.setText("Status: " + order.getStatus());
+        holder.tvOrderAmount.setText(String.format(Locale.getDefault(), "R%.2f", order.getAmount()));
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onOrderClick(order);

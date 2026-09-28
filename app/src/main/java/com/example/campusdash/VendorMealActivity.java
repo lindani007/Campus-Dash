@@ -71,14 +71,14 @@ public class VendorMealActivity extends AppCompatActivity {
         double price = Double.parseDouble(priceStr);
 
         if (selectedMealId == -1) {
-            // INSERT NEW MEAL
-            boolean success = dbHelper.insertMeal(name, price, category, imageUrl);
+            // INSERT NEW MEAL - Using default storeId 1
+            boolean success = dbHelper.insertMeal(name, price, category, imageUrl, 1);
             if (success) {
                 Toast.makeText(this, "Meal added successfully!", Toast.LENGTH_SHORT).show();
             }
         } else {
-            // UPDATE EXISTING MEAL
-            boolean success = dbHelper.updateMeal(selectedMealId, name, price, category, imageUrl);
+            // UPDATE EXISTING MEAL - Using default storeId 1
+            boolean success = dbHelper.updateMeal(selectedMealId, name, price, category, imageUrl, 1);
             if (success) {
                 Toast.makeText(this, "Meal updated successfully!", Toast.LENGTH_SHORT).show();
                 selectedMealId = -1;

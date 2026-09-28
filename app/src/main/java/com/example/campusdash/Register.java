@@ -51,7 +51,7 @@ public class Register extends AppCompatActivity {
         }
 
 
-        String assignedRole = "Member";
+        String assignedRole = "Admin";
 
         User newUser = new User(email, password, fullname, assignedRole, "");
 

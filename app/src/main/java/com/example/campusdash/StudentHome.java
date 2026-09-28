@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,7 +65,13 @@ public class StudentHome extends AppCompatActivity {
         navProfile = findViewById(R.id.navProfile);
 
         rvMeals.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MealAdapter(filteredMealList);
+        
+        // Fix: Added click listener to add meal to cart
+        adapter = new MealAdapter(filteredMealList, meal -> {
+            dbHelper.addToCart(meal);
+            Toast.makeText(StudentHome.this, meal.getMealname() + " added to cart!", Toast.LENGTH_SHORT).show();
+        });
+        
         rvMeals.setAdapter(adapter);
 
         setupCategories();
